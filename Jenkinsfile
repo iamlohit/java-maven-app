@@ -35,8 +35,9 @@ pipeline {
                     echo "deploying"
                     // gv.deployApp()
                     def dockerCmd = 'docker run -d -p 8083:8080 xlohitj/my-repo:jma-3.0'
-                    sshagent(['ec2-server-key'])
+                    sshagent(['ec2-server-key']) {
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.221.155.36 ${dockerCmd}"
+                    }
                 }
             }
         }
