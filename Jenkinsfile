@@ -32,7 +32,7 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    echo "deploying with GITHUB"
+                    echo "deploying"
                     gv.deployApp()
                 }
             }
