@@ -24,7 +24,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    echo "building docker image"
+                    echo "building the docker image"
                     gv.buildImage()
                 }
             }
