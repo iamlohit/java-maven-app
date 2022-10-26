@@ -14,6 +14,9 @@ def buildImage() {
 
 def deployApp() {
     echo 'deploying the application...'
+    def dockerCmd = 'docker run -d -p 8080:8080 xlohitj/my-repo:jma-3.0'
+    sshagent(['ec2-server-key'])
+        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.221.155.36 ${dockerCmd}"
 } 
 
 return this
