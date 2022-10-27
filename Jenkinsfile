@@ -2,6 +2,9 @@ def gv
 
 pipeline {
     agent any
+    tools {
+        maven 'maven-3.6'
+    }
     stages {
         stage("init") {
             steps {
@@ -13,16 +16,16 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    echo "building jar"
-                    //gv.buildJar()
+                    echo "building the jar"
+                    gv.buildJar()
                 }
             }
         }
         stage("build image") {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    echo "building docker image"
+                    gv.buildImage()
                 }
             }
         }
@@ -30,7 +33,11 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    //gv.deployApp()
+                    // gv.deployApp()
+                    def dockerCmd = 'docker run -d -p 8083:8080 xlohitj/my-repo:jma-3.0'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.88.130.147 ${dockerCmd}"
+                    }
                 }
             }
         }
